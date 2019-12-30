@@ -33,7 +33,7 @@ public class testController {
       photoDAO.create(p);
       session.getTransaction().commit();
       session.close();
-      //bonne nuit
+      //bonne nuit 2
       return "helloyeeew";
     }
 }
