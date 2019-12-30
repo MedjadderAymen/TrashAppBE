@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="dz.trash.TrashBackend.Models.Photo" table="photo">
+        <id name="id_photo" column="id_photo" type="integer">
+            <generator class="increment" > </generator>
+        </id>
+        <property name="path" column="path" type="string" length="30" />
+        <property name="creation_date" column="creation_date" type="date" />
+
+    </class>
+</hibernate-mapping>

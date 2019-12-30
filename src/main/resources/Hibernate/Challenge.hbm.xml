@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="dz.trash.TrashBackend.Models.Challenge" table="challenge">
+        <id name="id_challenge" column="id_challenge" type="integer">
+            <generator class="increment"/>
+        </id>
+        <property  column="creation_date" name="creation_date"  type="date" />
+        <property column="state" name="state" type="integer" />
+        <property  column="starting_date" name="starting_date"  type="date" />
+        <property  column="ending_date" name="ending_date"  type="date" />
+        <property  column="latitude" name="latitude"  type="float" />
+        <property  column="longitude" name="longitude"  type="float" />
+        <property  column="street" name="street"  type="string" />
+        <property  column="city" name="city"  type="string" />
+        <property  column="zip_code" name="zip_code"  type="string" />
+        <property  column="country" name="country"  type="string" />
+
+        <set name="client" table="participants" cascade="delete-orphan">
+            <key column="id_challenge"/>
+            <many-to-many column="id_user" class="dz.trash.TrashBackend.Models.Client" />
+        </set>
+
+        <many-to-one name="owner" column="id_user" not-null="true" />
+
+        <set name="photo" cascade="delete-orphan" lazy="false" fetch="join">
+            <key column="id_challenge"/>
+            <one-to-many class="dz.trash.TrashBackend.Models.Photo"  />
+        </set>
+
+        <set name="note" cascade="delete-orphan">
+            <key column="id_challenge"/>
+            <one-to-many class="dz.trash.TrashBackend.Models.Note" />
+        </set>
+
+        <set name="comment" cascade="delete-orphan">
+            <key column="id_challenge"/>
+            <one-to-many class="dz.trash.TrashBackend.Models.Comment" />
+        </set>
+
+
+    </class>
+</hibernate-mapping>
