@@ -33,8 +33,8 @@ public class UserDAO extends DAO<User> {
 
     @Override
     public User find(int id) {
-        session.get(User.class,id);
-        return null;
+        User u = (User) session.get(User.class,id);
+        return u;
     }
 
     @Override

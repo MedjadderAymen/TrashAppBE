@@ -108,7 +108,7 @@ public class AdminController {
     }
 
     //get all admin
-    @GetMapping("/admin")
+    @GetMapping("/admins")
     public List<Admin> getAlladmin() {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
