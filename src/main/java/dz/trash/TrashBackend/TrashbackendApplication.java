@@ -12,7 +12,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Date;
+
 
 @SpringBootApplication
 public class TrashbackendApplication {
@@ -20,7 +20,6 @@ public class TrashbackendApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(TrashbackendApplication.class, args);
-		//bonne anneéeeee
 	}
 
 
