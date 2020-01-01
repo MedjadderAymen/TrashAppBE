@@ -33,7 +33,7 @@
             <key column="id_challenge"/>
             <one-to-many class="dz.trash.TrashBackend.Models.Note" />
         </set>
-//bl
+
         <set name="comment" cascade="save-update" lazy="false" fetch="join">
             <key column="id_challenge"/>
             <one-to-many class="dz.trash.TrashBackend.Models.Comment" />
