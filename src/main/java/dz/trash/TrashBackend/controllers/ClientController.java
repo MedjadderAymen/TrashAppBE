@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Controller
+@RestController
 public class ClientController {
     ClientDAO clientD;
 
@@ -45,16 +45,17 @@ public class ClientController {
     //get a single client
     @GetMapping("/clients/{id}")
     public Client findById(@PathVariable int id){
-        SessionFactory sessionFactory = new Configuration()
-                .addResource("Hibernate/Challenge.hbm.xml")
-                .addResource("Hibernate/User.hbm.xml")
-                .addResource("Hibernate/Comment.hbm.xml")
-                .addResource("Hibernate/Note.hbm.xml")
-                .addResource("Hibernate/Photo.hbm.xml")
-                .configure("hibernate.cfg.xml").buildSessionFactory();
+        Configuration configuration = new Configuration();
+        configuration.addResource("Hibernate/Challenge.hbm.xml");
+        configuration.addResource("Hibernate/User.hbm.xml");
+        configuration.addResource("Hibernate/Comment.hbm.xml");
+        configuration.addResource("Hibernate/Note.hbm.xml");
+        configuration.addResource("Hibernate/Photo.hbm.xml");
+        configuration.configure("hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
+        clientD = new ClientDAO(session);
         Client c=clientD.find(id);
 
         session.getTransaction().commit();
@@ -97,6 +98,7 @@ public class ClientController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        clientD = new ClientDAO(session);
         Client c = clientD.find(id);
         c.setPhone_number(clientDetails.getPhone_number());
         c.setUser_name(clientDetails.getUser_name());
@@ -120,6 +122,10 @@ public class ClientController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+
+        clientD = new ClientDAO(session);
+
+
 
         List<Client> l= clientD.findAll();
 

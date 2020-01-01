@@ -33,12 +33,13 @@ public class AdminDAO extends DAO<Admin> {
 
     @Override
     public Admin find(int id) {
-        session.get(Admin.class,id);
-        return null;
+        Admin a = (Admin) session.get(Admin.class,id);
+        return a;
     }
 
     @Override
-    public List<Admin> findAll() {
-        return null;
+    public List<Admin> findAll(){
+        List<Admin> list= session.createQuery(String.format("from Admin")).list();
+        return list;
     }
 }

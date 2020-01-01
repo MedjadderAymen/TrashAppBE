@@ -1,5 +1,7 @@
 package dz.trash.TrashBackend.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.HashSet;
@@ -9,6 +11,7 @@ import java.util.Set;
 public class Client extends User {
     private String phone_number ;
     private String android_version ;
+    @JsonBackReference
     private Set<Challenge> challenge;
     private Set<Note> note;
     //private Set<Comment> comment;
@@ -33,7 +36,7 @@ public class Client extends User {
     }
 
 
-    //association (owner) one to many BIDidirectionnelle entre challenge et client ?????????????????????????
+    //association (owner) one to many BIDidirectionnelle entre challenge et client
 
     public void addChallenge(Challenge c) {
         //if( !getChallenge().contains(c) ) getChallenge().add(c);    //unidirectionnel

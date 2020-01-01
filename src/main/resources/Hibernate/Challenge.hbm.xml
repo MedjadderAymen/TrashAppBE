@@ -17,24 +17,24 @@
         <property  column="zip_code" name="zip_code"  type="string" />
         <property  column="country" name="country"  type="string" />
 
-        <set name="client" table="participants" cascade="delete-orphan">
+        <set name="client" table="participants" cascade="save-update" lazy="false" fetch="join">
             <key column="id_challenge"/>
             <many-to-many column="id_user" class="dz.trash.TrashBackend.Models.Client" />
         </set>
 
-        <many-to-one name="owner" column="id_user" not-null="true" />
+        <many-to-one name="owner" column="id_user" not-null="true" lazy="false" fetch="join" cascade="save-update" />
 
         <set name="photo" cascade="delete-orphan" lazy="false" fetch="join">
             <key column="id_challenge"/>
             <one-to-many class="dz.trash.TrashBackend.Models.Photo"  />
         </set>
 
-        <set name="note" cascade="delete-orphan">
+        <set name="note" cascade="save-update" lazy="false" fetch="join">
             <key column="id_challenge"/>
             <one-to-many class="dz.trash.TrashBackend.Models.Note" />
         </set>
 
-        <set name="comment" cascade="delete-orphan">
+        <set name="comment" cascade="save-update" lazy="false" fetch="join">
             <key column="id_challenge"/>
             <one-to-many class="dz.trash.TrashBackend.Models.Comment" />
         </set>

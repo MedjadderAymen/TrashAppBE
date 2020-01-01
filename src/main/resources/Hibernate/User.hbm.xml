@@ -21,7 +21,7 @@
             <property column="phone_number" name="phone_number" type="string" length="30"/>
             <property column="android_version" name="android_version" type="string" length="30"/>
 
-            <set name="challenge" inverse="true" cascade="delete-orphan">
+            <set name="challenge" inverse="true" cascade="save-update" lazy="false" fetch="join" >
                 <key column="id_user"/>
                 <one-to-many class="dz.trash.TrashBackend.Models.Challenge" />
             </set>
