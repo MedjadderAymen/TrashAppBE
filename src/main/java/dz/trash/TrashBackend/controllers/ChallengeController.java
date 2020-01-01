@@ -134,6 +134,7 @@ public class ChallengeController {
         session.getTransaction().commit();
         session.close();
         return l;
+        //bl
     }
 
 }
