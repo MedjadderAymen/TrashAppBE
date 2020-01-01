@@ -112,6 +112,7 @@ public class ChallengeController {
 
     //get all challenge
     @GetMapping("/challenges")
+    @ResponseBody
     public List<Challenge> getAllchallenge() {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
@@ -122,7 +123,7 @@ public class ChallengeController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
+        challengeD=new ChallengeDAO(session);
         List<Challenge> l= challengeD.findAll();
 
         session.getTransaction().commit();

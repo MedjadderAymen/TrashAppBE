@@ -32,8 +32,8 @@ public class PhotoDAO extends DAO<Photo> {
 
     @Override
     public Photo find(int id) {
-        session.get(Photo.class,id);
-        return null;
+        Photo p=(Photo)session.get(Photo.class,id);
+        return p;
     }
 
     @Override

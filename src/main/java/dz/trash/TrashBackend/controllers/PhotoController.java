@@ -55,7 +55,7 @@ public class PhotoController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
+        photoDAO=new PhotoDAO(session);
         Photo p =photoDAO.find(id);
 
         session.getTransaction().commit();
