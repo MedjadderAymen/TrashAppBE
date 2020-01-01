@@ -32,14 +32,13 @@ public class ClientDAO extends DAO<Client>{
 
     @Override
     public Client find(int id) {
-        session.get(Client.class,id);
-        return null;
+        Client c= (Client) session.get(Client.class,id);
+        return  c;
     }
 
     @Override
     public List<Client> findAll() {
-        return null;
-
-
+        List<Client> list= session.createQuery(String.format("from Client")).list();
+        return list;
     }
 }
