@@ -1,6 +1,7 @@
 package dz.trash.TrashBackend.DAOs;
 
 import dz.trash.TrashBackend.Models.Challenge;
+import dz.trash.TrashBackend.Models.Client;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -31,12 +32,13 @@ public class ChallengeDAO extends DAO<Challenge> {
 
     @Override
     public Challenge find(int id) {
-        session.get(Challenge.class,id);
-        return null;
+        Challenge c= (Challenge) session.get(Challenge.class,id);
+        return c;
     }
 
     @Override
     public List<Challenge> findAll() {
-        return null;
+        List<Challenge> list= session.createQuery(String.format("from Challenge")).list();
+        return list;
     }
 }

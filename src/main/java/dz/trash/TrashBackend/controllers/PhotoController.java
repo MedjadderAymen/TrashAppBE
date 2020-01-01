@@ -7,6 +7,7 @@ import dz.trash.TrashBackend.Models.Photo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,9 @@ import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 public class PhotoController {
+
     PhotoDAO photoDAO;
 
     // Create a new photo
@@ -97,7 +99,7 @@ public class PhotoController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
+        photoDAO=new PhotoDAO(session);
         Photo p = photoDAO.find(id);
         p.setPath(photoDetails.getPath());
         p.setCreation_date(photoDetails.getCreation_date());
@@ -121,7 +123,7 @@ public class PhotoController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
+        photoDAO=new PhotoDAO(session);
         List<Photo> l= photoDAO.findAll();
 
         session.getTransaction().commit();

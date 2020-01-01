@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Controller
+@RestController
 public class AdminController {
     AdminDAO adminD;
 
@@ -34,7 +34,7 @@ public class AdminController {
 
         adminD = new AdminDAO(session);
         Date date = new Date();
-        Admin a1 = new Admin(4, "zertal","youcef","youc","123456", date,"youcef@gmail.com");
+        Admin a1 = new Admin(6, "zertal","youcef","youc","123456", date,"youcef@gmail.com");
         adminD.create(a1);
         session.getTransaction().commit();
         session.close();
@@ -55,6 +55,7 @@ public class AdminController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        adminD = new AdminDAO(session);
         Admin a =adminD.find(id);
 
         session.getTransaction().commit();
@@ -97,6 +98,7 @@ public class AdminController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        adminD = new AdminDAO(session);
         Admin a = adminD.find(id);
         a.setEmail(adminDetails.getEmail());
         adminD.update(a);
@@ -120,6 +122,7 @@ public class AdminController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        adminD = new AdminDAO(session);
         List<Admin> l = adminD.findAll();
 
         session.getTransaction().commit();

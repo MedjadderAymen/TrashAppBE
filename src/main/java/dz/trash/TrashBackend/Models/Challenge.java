@@ -1,5 +1,7 @@
 package dz.trash.TrashBackend.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -66,7 +68,7 @@ public class Challenge {
     }
 
     //association (owner) one to many bidirectionnelle entre challenge et client (esq na7sbouha unidirectionnelle ou nn )
-
+    @JsonManagedReference
     private Client owner;
     public void addOwner(Client c){
         if(!c.getChallenge().contains(this)){

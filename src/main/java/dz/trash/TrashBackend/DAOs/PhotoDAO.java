@@ -32,7 +32,7 @@ public class PhotoDAO extends DAO<Photo> {
 
     @Override
     public Photo find(int id) {
-        Photo p=(Photo)session.get(Photo.class,id);
+        Photo p=(Photo) session.get(Photo.class,id);
         return p;
     }
 

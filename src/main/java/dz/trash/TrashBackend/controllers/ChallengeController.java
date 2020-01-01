@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 public class ChallengeController {
 
     ChallengeDAO challengeD;
@@ -37,6 +37,8 @@ public class ChallengeController {
         challengeD = new ChallengeDAO(session);
         Date date =new Date();
         Challenge ch=new Challenge(1,date,1,date,date, 1.5f,1.8f,"rout batna","khenchela","40000","algeria");
+        Client c1 = new Client(3, "meddjader","aymen","aymen","123", date,"0662556","v9");
+        ch.setOwner(c1);
         challengeD.create(ch);
 
         session.getTransaction().commit();
@@ -45,6 +47,7 @@ public class ChallengeController {
     }
 
     //get a single challenge
+    //@RequestMapping(value = "/challenges/{id}")
     @GetMapping("/challenges/{id}")
     public Challenge findById(@PathVariable int id){
         SessionFactory sessionFactory = new Configuration()
@@ -57,6 +60,7 @@ public class ChallengeController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        challengeD = new ChallengeDAO(session);
        Challenge ch =challengeD.find(id);
 
         session.getTransaction().commit();
@@ -99,6 +103,7 @@ public class ChallengeController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        challengeD = new ChallengeDAO(session);
         Challenge ch = challengeD.find(id);
         ch.setEnding_date(challengeDetails.getEnding_date());
         ch.setState(challengeDetails.getState());
@@ -112,7 +117,6 @@ public class ChallengeController {
 
     //get all challenge
     @GetMapping("/challenges")
-    @ResponseBody
     public List<Challenge> getAllchallenge() {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
@@ -123,7 +127,8 @@ public class ChallengeController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        challengeD=new ChallengeDAO(session);
+
+        challengeD = new ChallengeDAO(session);
         List<Challenge> l= challengeD.findAll();
 
         session.getTransaction().commit();
