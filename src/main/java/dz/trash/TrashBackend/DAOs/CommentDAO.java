@@ -1,6 +1,7 @@
 package dz.trash.TrashBackend.DAOs;
 
 import dz.trash.TrashBackend.Models.Comment;
+import dz.trash.TrashBackend.Models.Photo;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -33,13 +34,14 @@ public class CommentDAO extends DAO<Comment>{
 
     @Override
     public Comment find(int id) {
-        session.get(Comment.class,id);
-        return null;
+        Comment c= (Comment)session.get(Comment.class,id);
+        return c;
     }
 
     @Override
     public List<Comment> findAll() {
-
-        return null;
+        Criteria cr=session.createCriteria(Comment.class);
+        List<Comment> result=(List<Comment>)cr.list();
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package dz.trash.TrashBackend.Models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonMerge;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -122,10 +123,12 @@ public class Challenge {
 
 
     //classe association  ==> one to many unidirectionnelle entre comment et challenge
+    @JsonManagedReference
     private Set<Comment> comment;
 
     public void addComment(Comment c){
         if( !getComment().contains(c) ) getComment().add(c);
+
     }
 
     public void removeComment(Comment c){

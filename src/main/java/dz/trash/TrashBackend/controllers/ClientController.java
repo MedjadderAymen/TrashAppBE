@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class ClientController {
     // Create a new client
     @GetMapping("/client")
     @ResponseBody
-    public String addclient(){
+    public String addclient() throws ParseException {
     SessionFactory sessionFactory = new Configuration()
             .addResource("Hibernate/Challenge.hbm.xml")
             .addResource("Hibernate/User.hbm.xml")
@@ -33,8 +35,9 @@ public class ClientController {
     session.beginTransaction();
 
        clientD = new ClientDAO(session);
-      Date date = new Date();
-      Client c1 = new Client(3, "meddjader","aymen","aymen","123", date,"0662556","v9");
+        DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
+        Date birthday = df.parse("15/12/1995");
+        Client c1 = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
       clientD.create(c1);
       session.getTransaction().commit();
       session.close();
@@ -100,8 +103,9 @@ public class ClientController {
 
         clientD = new ClientDAO(session);
         Client c = clientD.find(id);
-        c.setPhone_number(clientDetails.getPhone_number());
-        c.setUser_name(clientDetails.getUser_name());
+        //c.setPhone_number(clientDetails.getPhone_number());
+        c.setPhone_number("0654895415");
+        c.setUser_name("manelmanel");
         clientD.update(c);
 
         session.getTransaction().commit();
@@ -124,8 +128,6 @@ public class ClientController {
         session.beginTransaction();
 
         clientD = new ClientDAO(session);
-
-
 
         List<Client> l= clientD.findAll();
 

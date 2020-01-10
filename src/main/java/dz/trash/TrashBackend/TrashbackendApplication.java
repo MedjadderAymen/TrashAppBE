@@ -20,6 +20,8 @@ public class TrashbackendApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(TrashbackendApplication.class, args);
+
+
 	}
 
 

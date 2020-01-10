@@ -5,11 +5,13 @@ import java.util.Objects;
 public class Note {
     private int id_note;
     private int note_value;
+    private int id_challenge;
 
-
-    public Note(int note_value,Client c) {
+    public Note(int id,int note_value,Client c, int id_chal) {
+        this.id_note=id;
         this.note_value = note_value;
-        addClient(c);
+        this.id_challenge=id_chal;
+        addowner(c);
     }
 
     public Note(){}
@@ -17,7 +19,7 @@ public class Note {
     //classe association  ==> one to many unidirectionnelle entre note et client
 
     private Client owner;
-    public void addClient(Client c){
+    public void addowner(Client c){
         setOwner(c);
     }
 
@@ -47,6 +49,14 @@ public class Note {
 
     public void setId_note(int id_note) {
         this.id_note = id_note;
+    }
+
+    public int getId_challenge() {
+        return id_challenge;
+    }
+
+    public void setId_challenge(int id_challenge) {
+        this.id_challenge = id_challenge;
     }
 
     @Override

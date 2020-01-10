@@ -9,8 +9,9 @@
         <property name="creation_date" column="creation_date" type="date"  />
         <property name="content" column="content" type="string" length="50" />
         <property name="is_enabled" column="is_enabled" type="boolean" length="50" />
+        <property name="id_challenge" column="id_challenge" type="int"  />
 
-        <many-to-one name="owner" column="id_user" not-null="true" />
+        <many-to-one name="owner" column="id_user" not-null="true"  lazy="false" fetch="join"/>
 
     </class>
 </hibernate-mapping>

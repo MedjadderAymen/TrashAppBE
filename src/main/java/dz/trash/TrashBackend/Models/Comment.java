@@ -1,5 +1,7 @@
 package dz.trash.TrashBackend.Models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,17 +10,19 @@ public class Comment {
     private String content ;
     private Date creation_date;
      private boolean is_enabled ;
+     private int id_challenge;
 
-    public Comment(int id_comment, String content, Date creation_date, boolean is_enabled,Client c) {
+    public Comment(int id_comment, String content, Date creation_date, boolean is_enabled,Client c,int id_ch) throws ParseException {
         this.id_comment = id_comment;
         this.content = content;
         this.creation_date = creation_date;
         this.is_enabled = is_enabled;
+        this.id_challenge=id_ch;
         addClient(c);
 
     }
 
-    public Comment(){}
+    public Comment() throws ParseException {}
 
     //classe association  ==> one to many unidirectionnelle entre commentaire et client
 
@@ -36,6 +40,14 @@ public class Comment {
 
     //**************************************************************************************************
 
+
+    public int getId_challenge() {
+        return id_challenge;
+    }
+
+    public void setId_challenge(int id_challenge) {
+        this.id_challenge = id_challenge;
+    }
 
     public int getId_comment() {
         return id_comment;
@@ -76,6 +88,7 @@ public class Comment {
         Comment comment = (Comment) o;
         return getId_comment() == comment.getId_comment();
     }
+
 
     @Override
     public int hashCode() {
