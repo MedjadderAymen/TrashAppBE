@@ -166,7 +166,7 @@ public class ChallengeController {
         Date birthday = df.parse("15/12/1995");
         Client client = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
         //Client client=new Client();
-       // client.setId_user(id_user);
+       //   client.setId_user(id_user);
         challenge.addParticipants(client);
         System.out.println("user participated in "+challenge);
          challengeDAO.update(challenge);
