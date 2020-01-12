@@ -38,7 +38,7 @@ public class NoteController {
         NoteDAO noteDAO = new NoteDAO(session);
 
 
-        Note n=new Note(1,5,c1,1);
+        Note n=new Note(5,c1,1);
 
         noteDAO.create(n);
         session.getTransaction().commit();

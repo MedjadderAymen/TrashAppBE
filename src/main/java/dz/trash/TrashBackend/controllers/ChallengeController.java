@@ -143,7 +143,57 @@ public class ChallengeController {
         session.getTransaction().commit();
         session.close();
         return l;
-        //bl
     }
+
+    @GetMapping("/participate/{id}")
+    @ResponseBody
+    public String participate(@PathVariable int id) throws ParseException {
+        SessionFactory sessionFactory = new Configuration()
+                .addResource("Hibernate/Challenge.hbm.xml")
+                .addResource("Hibernate/User.hbm.xml")
+                .addResource("Hibernate/Comment.hbm.xml")
+                .addResource("Hibernate/Note.hbm.xml")
+                .addResource("Hibernate/Photo.hbm.xml")
+                .configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        ChallengeDAO challengeDAO = new ChallengeDAO(session);
+        ClientDAO clientDAO= new ClientDAO(session);
+        Challenge challenge=challengeDAO.find(id);
+        System.out.println("challenge found:"+challenge);
+
+        DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
+        Date birthday = df.parse("15/12/1995");
+        Client client = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
+        //Client client=new Client();
+       // client.setId_user(id_user);
+        challenge.addParticipants(client);
+        System.out.println("user participated in "+challenge);
+         challengeDAO.update(challenge);
+         return"participation done!";
+    }
+    //get all participants
+    @GetMapping("/participants/{id}")
+    public List<Client> getAllParticipant(@PathVariable int id) {
+        SessionFactory sessionFactory = new Configuration()
+                .addResource("Hibernate/Challenge.hbm.xml")
+                .addResource("Hibernate/User.hbm.xml")
+                .addResource("Hibernate/Comment.hbm.xml")
+                .addResource("Hibernate/Note.hbm.xml")
+                .addResource("Hibernate/Photo.hbm.xml")
+                .configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        challengeD = new ChallengeDAO(session);
+        Challenge challenge= challengeD.find(id);
+        List<Client>   l = (List<Client>) challenge.getParticipants();
+        session.getTransaction().commit();
+        session.close();
+        return l;
+    }
+
+
+
 
 }

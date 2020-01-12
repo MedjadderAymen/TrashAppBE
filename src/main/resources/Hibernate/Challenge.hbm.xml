@@ -17,7 +17,7 @@
         <property  column="zip_code" name="zip_code"  type="string" />
         <property  column="country" name="country"  type="string" />
 
-        <set name="client" table="participants" cascade="save-update" lazy="false" fetch="join">
+        <set name="participants" table="participants"  cascade="delete-orphan" lazy="false" fetch="select">
             <key column="id_challenge"/>
             <many-to-many column="id_user" class="dz.trash.TrashBackend.Models.Client" />
         </set>

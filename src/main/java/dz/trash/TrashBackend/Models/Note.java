@@ -7,8 +7,8 @@ public class Note {
     private int note_value;
     private int id_challenge;
 
-    public Note(int id,int note_value,Client c, int id_chal) {
-        this.id_note=id;
+    public Note(int note_value,Client c, int id_chal) {
+       // this.id_note=id;
         this.note_value = note_value;
         this.id_challenge=id_chal;
         addowner(c);
@@ -42,7 +42,6 @@ public class Note {
     public void setNote_value(int note_value) {
         this.note_value = note_value;
     }
-
     public int getId_note() {
         return id_note;
     }
