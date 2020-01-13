@@ -13,6 +13,7 @@ public class Client extends User {
     private String android_version ;
     @JsonBackReference
     private Set<Challenge> challenge;
+
     private Set<Note> note;
     //private Set<Comment> comment;
 

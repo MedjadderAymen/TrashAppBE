@@ -2,6 +2,7 @@ package dz.trash.TrashBackend.DAOs;
 
 import dz.trash.TrashBackend.Models.Challenge;
 import dz.trash.TrashBackend.Models.Client;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -26,8 +27,14 @@ public class ChallengeDAO extends DAO<Challenge> {
 
     @Override
     public boolean update(Challenge obj) {
-        session.update(obj);
+        try {
+        session.saveOrUpdate(obj);
         return false;
+        }
+        catch (HibernateException e){
+            e.printStackTrace();
+            return true;
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dz.trash.TrashBackend.Models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonMerge;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class Challenge {
         this.zip_code = zip_code;
         this.country = country;
         photo= new HashSet<Photo>();
-        client= new HashSet<Client>();
+       participants= new HashSet<Client>();
         note = new HashSet<Note>();
         comment = new HashSet<Comment>();
 
@@ -43,7 +44,7 @@ public class Challenge {
 
     public Challenge() {
         photo= new HashSet<Photo>();
-        client= new HashSet<Client>();
+        participants= new HashSet<Client>();
         note = new HashSet<Note>();
         comment = new HashSet<Comment>();
 
@@ -75,7 +76,7 @@ public class Challenge {
             if(getOwner() != null) removeOwner();
             setOwner(c); c.addChallenge(this); }
     }
-    public void removeOwner(){ getOwner().removeChallenge(this); setClient(null);
+    public void removeOwner(){ getOwner().removeChallenge(this); setOwner(null);
     }
     public Client getOwner(){
         return owner;
@@ -86,19 +87,19 @@ public class Challenge {
 
     //association (participants) many to many unidirectionnelle entre challenge et client
 
-    private Set<Client> client;    //association many to many entre <challenge> et <client>
-    public void addClient(Client c){ if(
-            !getClient().contains(c) ) getClient().add(c);  }
+    private Set<Client> participants;    //association many to many entre <challenge> et <client>
+    public void addParticipants(Client participants){ if(
+            !getParticipants().contains(participants) ) getParticipants().add(participants);  }
 
-    public void removeClient(Client c){
-        if(getClient().contains(c)) getClient().remove(c); }
+    public void removeParticipants(Client participants){
+        if(getParticipants().contains(participants)) getParticipants().remove(participants); }
 
-    public Set<Client> getClient() {
-        return client;
+    public Set<Client> getParticipants() {
+        return participants;
     }
 
-    public void setClient(Set<Client> c) {
-        this.client = c;
+    public void setParticipants(Set<Client> participants) {
+        this.participants = participants;
     }
 
 
@@ -122,10 +123,12 @@ public class Challenge {
 
 
     //classe association  ==> one to many unidirectionnelle entre comment et challenge
+    @JsonManagedReference
     private Set<Comment> comment;
 
     public void addComment(Comment c){
         if( !getComment().contains(c) ) getComment().add(c);
+
     }
 
     public void removeComment(Comment c){

@@ -57,6 +57,7 @@ public class PhotoController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+
         photoDAO=new PhotoDAO(session);
         Photo p =photoDAO.find(id);
 
@@ -66,7 +67,7 @@ public class PhotoController {
     }
 
     // Delete a photo
-    @DeleteMapping("/photos/{id}")
+    @DeleteMapping("/photosdel/{id}")
     public ResponseEntity<?> deletephoto(@PathVariable(value = "id") int id){
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
@@ -88,8 +89,9 @@ public class PhotoController {
     }
 
     //update a photo
-    @PutMapping("/photos/{id}")
-    public Photo updatephoto(@PathVariable(value = "id") int id,@Valid @RequestBody Photo photoDetails) {
+    @RequestMapping(value = "/photosup/{id}", method = RequestMethod.PUT)
+    //@GetMapping("/photosup/{id}")
+    public Photo updatephoto(@PathVariable(value = "id") int id) {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -101,8 +103,9 @@ public class PhotoController {
         session.beginTransaction();
         photoDAO=new PhotoDAO(session);
         Photo p = photoDAO.find(id);
-        p.setPath(photoDetails.getPath());
-        p.setCreation_date(photoDetails.getCreation_date());
+        Date newDate=new Date();
+        p.setPath("new path");
+        p.setCreation_date(newDate);
         photoDAO.update(p);
 
         session.getTransaction().commit();

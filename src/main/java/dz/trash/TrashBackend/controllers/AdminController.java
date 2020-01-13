@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class AdminController {
     // Create a new admin
     @GetMapping("/admin")
     @ResponseBody
-    public String addadmin(){
+    public String addadmin() throws ParseException {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -33,8 +35,9 @@ public class AdminController {
         session.beginTransaction();
 
         adminD = new AdminDAO(session);
-        Date date = new Date();
-        Admin a1 = new Admin(6, "zertal","youcef","youc","123456", date,"youcef@gmail.com");
+        DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
+        Date birthday = df.parse("21/10/1998");
+        Admin a1 = new Admin(6, "zouaoui","maya","may","azerty", birthday,"maya@gmail.com");
         adminD.create(a1);
         session.getTransaction().commit();
         session.close();
