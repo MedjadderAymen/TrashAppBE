@@ -27,15 +27,10 @@ public class ChallengeDAO extends DAO<Challenge> {
 
     @Override
     public boolean update(Challenge obj) {
-        try {
         session.saveOrUpdate(obj);
         return false;
         }
-        catch (HibernateException e){
-            e.printStackTrace();
-            return true;
-        }
-    }
+
 
     @Override
     public Challenge find(int id) {

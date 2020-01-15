@@ -5,6 +5,7 @@ import dz.trash.TrashBackend.DAOs.ClientDAO;
 import dz.trash.TrashBackend.Models.Challenge;
 import dz.trash.TrashBackend.Models.Client;
 import dz.trash.TrashBackend.Models.Photo;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -17,6 +18,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class ChallengeController {
@@ -145,9 +147,9 @@ public class ChallengeController {
         return l;
     }
 
-    @GetMapping("/participate/{id}")
+    @GetMapping("/challenges/{id}/participate/{id_user}")
     @ResponseBody
-    public String participate(@PathVariable int id) throws ParseException {
+    public String participate(@PathVariable int id,@PathVariable int id_user) throws ParseException {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -160,21 +162,22 @@ public class ChallengeController {
         ChallengeDAO challengeDAO = new ChallengeDAO(session);
         ClientDAO clientDAO= new ClientDAO(session);
         Challenge challenge=challengeDAO.find(id);
-        System.out.println("challenge found:"+challenge);
-
-        DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
-        Date birthday = df.parse("15/12/1995");
-        Client client = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
-        //Client client=new Client();
-       //   client.setId_user(id_user);
+        //System.out.println("challenge found:"+challenge);
+       // DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
+        //Date birthday = df.parse("15/12/1995");
+        //Client client = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
+        Client client=new Client();
+         client.setId_user(id_user);
         challenge.addParticipants(client);
-        System.out.println("user participated in "+challenge);
+        //System.out.println("user participated in "+challenge);
          challengeDAO.update(challenge);
+        session.getTransaction().commit();
+        session.close();
          return"participation done!";
     }
     //get all participants
     @GetMapping("/participants/{id}")
-    public List<Client> getAllParticipant(@PathVariable int id) {
+    public Set<Client> getAllParticipant(@PathVariable int id) {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -187,10 +190,42 @@ public class ChallengeController {
 
         challengeD = new ChallengeDAO(session);
         Challenge challenge= challengeD.find(id);
-        List<Client>   l = (List<Client>) challenge.getParticipants();
+        Set<Client> l = (Set<Client>) challenge.getParticipants();
         session.getTransaction().commit();
         session.close();
         return l;
+    }
+    //delete  participant
+    @GetMapping("/challenges/{id}/delparticipant/{id_user}")
+    public String deleteParticipant(@PathVariable int id,@PathVariable int id_user) throws ParseException {
+        SessionFactory sessionFactory = new Configuration()
+                .addResource("Hibernate/Challenge.hbm.xml")
+                .addResource("Hibernate/User.hbm.xml")
+                .addResource("Hibernate/Comment.hbm.xml")
+                .addResource("Hibernate/Note.hbm.xml")
+                .addResource("Hibernate/Photo.hbm.xml")
+                .configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        challengeD = new ChallengeDAO(session);
+        Challenge challenge= challengeD.find(id);
+       // DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
+        //Date birthday = df.parse("15/12/1995");
+        //Client client = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
+        //Client client=new Client();
+        //client.setId_user(id_user);
+        //challenge.removeParticipants(client);
+        //challengeD.update(challenge);
+        Query q = session.createSQLQuery("delete FROM participants WHERE id_challenge=:id_challenge and id_user=:id_user").setParameter("id_challenge",id).setParameter("id_user",id_user);
+        int c=q.executeUpdate();
+        if (c==1) {
+            session.getTransaction().commit();
+            return "participant removed!!";
+        }
+        else {
+            return "participant not  removed!!";
+        }
     }
 
 

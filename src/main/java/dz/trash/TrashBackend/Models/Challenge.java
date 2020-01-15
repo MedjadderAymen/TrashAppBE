@@ -88,8 +88,8 @@ public class Challenge {
     //association (participants) many to many unidirectionnelle entre challenge et client
 
     private Set<Client> participants;    //association many to many entre <challenge> et <client>
-    public void addParticipants(Client participants){ if(
-            !getParticipants().contains(participants) ) getParticipants().add(participants);  }
+    public void addParticipants(Client part){
+        if(!getParticipants().contains(part) ) getParticipants().add(part);  }
 
     public void removeParticipants(Client participants){
         if(getParticipants().contains(participants)) getParticipants().remove(participants); }

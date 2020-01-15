@@ -2,6 +2,7 @@ package dz.trash.TrashBackend.controllers;
 
 import dz.trash.TrashBackend.DAOs.ClientDAO;
 import dz.trash.TrashBackend.Models.Client;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,16 +15,19 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
 public class ClientController {
     ClientDAO clientD;
 
-    // Create a new client
-    @GetMapping("/client")
+    // REGISTRATION a new client
+    @GetMapping("/client/{last_name},{first_name},{user_name},{password},{birthdate},{phone_number},{android_version}")
     @ResponseBody
-    public String addclient() throws ParseException {
+    public Client addclient(@PathVariable String last_name, @PathVariable String first_name,
+                            @PathVariable String user_name, @PathVariable String password, @PathVariable Date birthdate, @PathVariable String phone_number,
+                            @PathVariable String android_version) throws ParseException {
     SessionFactory sessionFactory = new Configuration()
             .addResource("Hibernate/Challenge.hbm.xml")
             .addResource("Hibernate/User.hbm.xml")
@@ -35,17 +39,17 @@ public class ClientController {
     session.beginTransaction();
 
        clientD = new ClientDAO(session);
-        DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
-        Date birthday = df.parse("15/12/1995");
-        Client c1 = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
+        //DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
+       // Date birthday = df.parse("15/12/1995");
+        Client c1 = new Client(10, last_name,first_name,user_name,password,birthdate,phone_number,android_version);
       clientD.create(c1);
       session.getTransaction().commit();
       session.close();
-      return"client added !! ";
+      return c1;
 
 }
 
-    //get a single client
+//get a single client
     @GetMapping("/clients/{id}")
     public Client findById(@PathVariable int id){
         Configuration configuration = new Configuration();
@@ -60,7 +64,6 @@ public class ClientController {
         session.beginTransaction();
         clientD = new ClientDAO(session);
         Client c=clientD.find(id);
-
         session.getTransaction().commit();
         session.close();
         return c;
@@ -78,17 +81,15 @@ public class ClientController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         clientD = new ClientDAO(session);
         Client c = clientD.find(id);
         clientD.delete(c);
-
         session.getTransaction().commit();
         session.close();
         return ResponseEntity.ok().build();
     }
 
-    //update a client
+    //update a client (mazal static)=>mandirouhch
     @PutMapping("/clients/{id}")
     public Client updateclient(@PathVariable(value = "id") int id,@Valid @RequestBody Client clientDetails) {
         SessionFactory sessionFactory = new Configuration()
@@ -135,4 +136,24 @@ public class ClientController {
         session.close();
         return l;
     }
+    // login
+    @GetMapping("/client/{user_name}/{password}")
+    public List<Client> login( @PathVariable String user_name,@PathVariable String password) throws ParseException {
+        SessionFactory sessionFactory = new Configuration()
+                .addResource("Hibernate/Challenge.hbm.xml")
+                .addResource("Hibernate/User.hbm.xml")
+                .addResource("Hibernate/Comment.hbm.xml")
+                .addResource("Hibernate/Note.hbm.xml")
+                .addResource("Hibernate/Photo.hbm.xml")
+                .configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        clientD = new ClientDAO(session);
+        Query q = session.createSQLQuery(" select * FROM users WHERE user_name=:user_name and password=:password").setParameter("user_name",user_name).setParameter("password",password);
+        List<Client> c= (List<Client>) q.list();
+        session.getTransaction().commit();
+        return c;
+    }
+
+
 }
