@@ -20,10 +20,15 @@ import java.util.List;
 public class ClientController {
     ClientDAO clientD;
 
-    // Create a new client
-    @GetMapping("/client")
-    @ResponseBody
-    public String addclient() throws ParseException {
+    // registration a new client
+    @PostMapping("/client/{last_name},{first_name},{username},{password},{androidV},{tlfn},{birthday}")
+    public Client addclient(@PathVariable ("first_name") String first_name,
+                            @PathVariable ("last_name") String last_name,
+                            @PathVariable ("username") String username,
+                            @PathVariable ("password") String password,
+                            @PathVariable ("androidV") String androidV,
+                            @PathVariable ("tlfn") String tlfn,
+                            @PathVariable ("birthday") String birthday) throws ParseException {
     SessionFactory sessionFactory = new Configuration()
             .addResource("Hibernate/Challenge.hbm.xml")
             .addResource("Hibernate/User.hbm.xml")
@@ -36,12 +41,12 @@ public class ClientController {
 
        clientD = new ClientDAO(session);
         DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
-        Date birthday = df.parse("15/12/1995");
-        Client c1 = new Client(4, "zebair","manel","manel123","123",birthday,"0655358656","v8");
+        Date dt = df.parse("20/08/2019");
+        Client c1 = new Client(4, last_name,first_name,username,password,dt,tlfn,androidV);
       clientD.create(c1);
       session.getTransaction().commit();
       session.close();
-      return"client added !! ";
+      return c1;
 
 }
 

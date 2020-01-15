@@ -3,12 +3,13 @@ package dz.trash.TrashBackend.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.xml.crypto.Data;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Client extends User {
+public class Client extends User implements Serializable{
     private String phone_number ;
     private String android_version ;
     @JsonBackReference
