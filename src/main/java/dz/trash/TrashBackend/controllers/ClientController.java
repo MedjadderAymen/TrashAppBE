@@ -24,7 +24,7 @@ package dz.trash.TrashBackend.controllers;
 public class ClientController {
     ClientDAO clientD;
 
-    // REGISTRATION a new client
+    // REGISTRATION  a new client
     @PostMapping("/client")
     public Client addclient(@RequestBody Client client) throws ParseException {
         SessionFactory sessionFactory = new Configuration()
