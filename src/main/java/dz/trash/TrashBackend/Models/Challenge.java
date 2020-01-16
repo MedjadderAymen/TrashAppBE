@@ -173,8 +173,6 @@ public class Challenge {
 
 
 
-        //la fonction de getparticipant
-
 
     public int getId_challenge() {
         return id_challenge;

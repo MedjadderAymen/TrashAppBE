@@ -2,7 +2,7 @@
 //****************************************************************
 package dz.trash.TrashBackend.controllers;
 
-        import dz.trash.TrashBackend.DAOs.ClientDAO;
+import dz.trash.TrashBackend.DAOs.ClientDAO;
         import dz.trash.TrashBackend.Models.Client;
         import org.hibernate.Query;
         import org.hibernate.Session;
@@ -37,6 +37,8 @@ public class ClientController {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         clientD = new ClientDAO(session);
+        Integer id = clientD.findAll().size() + 1;
+        client.setId_user(id);
         clientD.create(client);
         session.getTransaction().commit();
         session.close();
@@ -83,7 +85,7 @@ public class ClientController {
         return ResponseEntity.ok().build();
     }
 
-    //update a client (mazal static)=>mandirouhch
+    //update a client
     @PutMapping("/clients/{id_user}")
     public Client updateclient(@PathVariable int id_user, @RequestBody Client client) {
         SessionFactory sessionFactory = new Configuration()
@@ -146,9 +148,15 @@ public class ClientController {
         clientD = new ClientDAO(session);
         Query q = session.createSQLQuery("select id_user FROM users  WHERE user_name=:user_name and password=:password").setParameter("user_name",user_name).setParameter("password",password);
         Object id =  q.uniqueResult();
-        Client c= clientD.find(Integer.valueOf(id+""));
-        session.getTransaction().commit();
-        return c;
+        if(id!=null){
+            Client c= clientD.find(Integer.valueOf(id+""));
+            session.getTransaction().commit();
+            session.close();
+            return c;
+        }else {
+            return null;
+        }
+
     }
 
 

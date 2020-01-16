@@ -7,11 +7,11 @@ public class Note {
     private int note_value;
     private int id_challenge;
 
-    public Note(int note_value,Client c, int id_chal) {
+    public Note(int note_valu) {
        // this.id_note=id;
         this.note_value = note_value;
-        this.id_challenge=id_chal;
-        addowner(c);
+        //this.id_challenge=id_chal;
+        //addowner(c);
     }
 
     public Note(){}

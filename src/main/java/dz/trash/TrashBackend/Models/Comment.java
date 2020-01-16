@@ -12,13 +12,13 @@ public class Comment {
      private boolean is_enabled ;
      private int id_challenge;
 
-    public Comment(int id_comment, String content, Date creation_date, boolean is_enabled,Client c,int id_ch) throws ParseException {
+    public Comment(int id_comment, String content, Date creation_date, boolean is_enabled) throws ParseException {
         this.id_comment = id_comment;
         this.content = content;
         this.creation_date = creation_date;
         this.is_enabled = is_enabled;
-        this.id_challenge=id_ch;
-        addClient(c);
+        //this.id_challenge=id_ch;
+        //addClient(c);
 
     }
 
