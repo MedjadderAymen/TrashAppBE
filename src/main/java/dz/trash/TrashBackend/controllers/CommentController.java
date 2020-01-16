@@ -2,6 +2,7 @@ package dz.trash.TrashBackend.controllers;
 
 
 import dz.trash.TrashBackend.DAOs.ChallengeDAO;
+import dz.trash.TrashBackend.DAOs.ClientDAO;
 import dz.trash.TrashBackend.DAOs.CommentDAO;
 import dz.trash.TrashBackend.DAOs.PhotoDAO;
 import dz.trash.TrashBackend.Models.Challenge;
@@ -21,10 +22,12 @@ import java.util.List;
 
 @RestController
 public class CommentController {
-    // Create a new comment
-    @GetMapping("/comment")
-    @ResponseBody
-    public String addcomment() throws ParseException {
+    CommentDAO commentDAO;
+    ChallengeDAO challengeDAO;
+    ClientDAO clientDAO;
+    // Create a new comment  ????????,mazal matamchch
+    @PostMapping("/comment/{id_user}/{id_challenge}")
+    public Comment addcomment(@PathVariable int id_user, @PathVariable int id_challenge,@RequestBody Comment comment) throws ParseException {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -34,22 +37,19 @@ public class CommentController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
-        CommentDAO commentDAO = new CommentDAO(session);
-        Date date= new Date();
-        DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
-        Date birthDate = df.parse("15/12/1995");
-        Date endingDate = df.parse("12/01/2020");
-        Challenge ch=new Challenge(2,date,1,date,endingDate, 1.5f,1.8f,"khroub","constantine","25000","algeria");
-        Client c1 = new Client(4, "zebair","manel","manel123","123", birthDate,"0655358656","v8");
-        Comment c =new Comment(1,"best ever",date,true,c1,2 );
-        ch.addComment(c);
-        c.addClient(c1);
-        commentDAO.create(c);
+        commentDAO = new CommentDAO(session);
+        Integer id = commentDAO.findAll().size() + 1;
+        comment.setId_comment(id);
+        Challenge challenge=challengeDAO.find(id_challenge);
+        Client c1 = clientDAO.find(id_user);
+        comment.addClient(c1);
+        challenge.addComment(comment);
+        challengeDAO.update(challenge);
+        commentDAO.create(comment);
 
         session.getTransaction().commit();
         session.close();
-        return"comment added !! ";
+        return comment;
     }
 
     //get a comment
@@ -72,6 +72,7 @@ public class CommentController {
         session.close();
         return c;
     }
+
     // Delete a comment
     @DeleteMapping("/commentsdel/{id}")
     public ResponseEntity<?> deletecomment(@PathVariable(value = "id") int id){
@@ -95,9 +96,8 @@ public class CommentController {
     }
 
     //update a comment
-    @RequestMapping(value = "/commentup/{id}", method = RequestMethod.PUT)
-    //@GetMapping("/commentup/{id}")
-    public Comment updatecomment(@PathVariable(value = "id") int id) {
+    @PutMapping("/commentup/{id}")
+    public Comment updatecomment(@PathVariable(value = "id") int id,@RequestBody Comment comment) {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -109,10 +109,9 @@ public class CommentController {
         session.beginTransaction();
         CommentDAO commentDAO=new CommentDAO(session);
         Comment c = commentDAO.find(id);
-        c.setContent("best");
-        c.setIs_enabled(false);
+        c.setContent(comment.getContent());
+        c.setIs_enabled(comment.getIs_enabled());
         commentDAO.update(c);
-
         session.getTransaction().commit();
         session.close();
         return c;

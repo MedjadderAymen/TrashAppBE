@@ -1,7 +1,9 @@
 package dz.trash.TrashBackend.Models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonMerge;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,9 +24,19 @@ public class Challenge {
     private String country;
 
 
-
-    public Challenge(int id_challenge, Date creation_date, int state, Date starting_date, Date ending_date, float latitude, float longitude, String street, String city, String zip_code, String country) {
-        this.id_challenge = id_challenge;
+    @JsonCreator
+    /*public Challenge(@JsonProperty("id_challenge")int id_challenge,
+                     @JsonProperty("creation_date")Date creation_date,
+                     @JsonProperty("state")int state,
+                     @JsonProperty("starting_date")Date starting_date,
+                     @JsonProperty("ending_date")Date ending_date,
+                     @JsonProperty("latitude")float latitude,
+                     @JsonProperty("longitude")float longitude,
+                     @JsonProperty("street")String street,
+                     @JsonProperty("city")String city,
+                     @JsonProperty("zip_code")String zip_code,
+                     @JsonProperty("country")String country) {
+    this.id_challenge = id_challenge;
         this.creation_date = creation_date;
         this.state = state;
         this.starting_date = starting_date;
@@ -40,6 +52,23 @@ public class Challenge {
         note = new HashSet<Note>();
         comment = new HashSet<Comment>();
 
+    }*/
+    public Challenge(int id_challenge, Date creation_date, int state, Date starting_date, Date ending_date, float latitude, float longitude, String street, String city, String zip_code, String country) {
+        this.id_challenge = id_challenge;
+        this.creation_date = creation_date;
+        this.state = state;
+        this.starting_date = starting_date;
+        this.ending_date = ending_date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.street = street;
+        this.city = city;
+        this.zip_code = zip_code;
+        this.country = country;
+        photo= new HashSet<Photo>();
+        participants= new HashSet<Client>();
+        note = new HashSet<Note>();
+        comment = new HashSet<Comment>();
     }
 
     public Challenge() {
@@ -69,7 +98,7 @@ public class Challenge {
     }
 
     //association (owner) one to many bidirectionnelle entre challenge et client (esq na7sbouha unidirectionnelle ou nn )
-    @JsonManagedReference
+   // @JsonManagedReference
     private Client owner;
     public void addOwner(Client c){
         if(!c.getChallenge().contains(this)){
@@ -123,7 +152,7 @@ public class Challenge {
 
 
     //classe association  ==> one to many unidirectionnelle entre comment et challenge
-    @JsonManagedReference
+    //@JsonManagedReference
     private Set<Comment> comment;
 
     public void addComment(Comment c){

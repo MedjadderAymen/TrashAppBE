@@ -21,9 +21,8 @@ public class AdminController {
     AdminDAO adminD;
 
     // Create a new admin
-    @GetMapping("/admin")
-    @ResponseBody
-    public String addadmin() throws ParseException {
+    @PostMapping("/admin")
+    public Admin addadmin(@RequestBody Admin admin) throws ParseException {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -33,16 +32,11 @@ public class AdminController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         adminD = new AdminDAO(session);
-        DateFormat df= DateFormat.getDateInstance(DateFormat.SHORT);
-        Date birthday = df.parse("21/10/1998");
-        Admin a1 = new Admin(6, "zouaoui","maya","may","azerty", birthday,"maya@gmail.com");
-        adminD.create(a1);
+        adminD.create(admin);
         session.getTransaction().commit();
         session.close();
-        return"Admin added !! ";
-
+        return admin;
     }
 
     //get a single admin
@@ -57,10 +51,8 @@ public class AdminController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         adminD = new AdminDAO(session);
         Admin a =adminD.find(id);
-
         session.getTransaction().commit();
         session.close();
         return a;
@@ -78,11 +70,9 @@ public class AdminController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         adminD = new AdminDAO(session);
         Admin a = adminD.find(id);
         adminD.delete(a);
-
         session.getTransaction().commit();
         session.close();
         return ResponseEntity.ok().build();
@@ -90,7 +80,7 @@ public class AdminController {
 
     //update admin
     @PutMapping("/admins/{id}")
-    public Admin updateadmin(@PathVariable(value = "id") int id,@Valid @RequestBody Admin adminDetails) {
+    public Admin updateadmin(@PathVariable int id,@Valid @RequestBody Admin admin) {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -100,12 +90,10 @@ public class AdminController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         adminD = new AdminDAO(session);
         Admin a = adminD.find(id);
-        a.setEmail(adminDetails.getEmail());
+        a.setEmail(admin.getEmail());
         adminD.update(a);
-
         session.getTransaction().commit();
         session.close();
         return a;
@@ -124,10 +112,8 @@ public class AdminController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         adminD = new AdminDAO(session);
         List<Admin> l = adminD.findAll();
-
         session.getTransaction().commit();
         session.close();
         return l;

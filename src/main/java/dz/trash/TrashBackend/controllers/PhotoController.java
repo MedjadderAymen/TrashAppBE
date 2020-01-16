@@ -20,11 +20,10 @@ import java.util.List;
 public class PhotoController {
 
     PhotoDAO photoDAO;
-
+ChallengeDAO challengeDAO;
     // Create a new photo
-    @GetMapping("/photo")
-    @ResponseBody
-    public String addphoto(){
+    @PostMapping("/photo/{id_challenge}")
+    public Photo addphoto(@PathVariable int id_challenge, @RequestBody Photo photo){
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -34,20 +33,23 @@ public class PhotoController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         photoDAO=new PhotoDAO(session);
-        Date date =new Date();
-        Photo p=new Photo(6,"photo.png",date);
-        photoDAO.create(p);
-
+        challengeDAO= new ChallengeDAO(session);
+        Integer id = photoDAO.findAll().size() + 1;
+        photo.setId_photo(id);
+        photoDAO.create(photo);
+        Challenge challenge=challengeDAO.find(id_challenge);
+        challenge.addPhoto(photo);
+        challengeDAO.update(challenge);
         session.getTransaction().commit();
         session.close();
-        return"photo added !! ";
+        return photo;
+        //return"photo added !! ";
     }
 
     //get a single photo
-    @GetMapping("/photos/{id}")
-    public Photo findById(@PathVariable int id){
+    @GetMapping("/photos/{id_photo}")
+    public Photo findById(@PathVariable int id_photo){
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -57,13 +59,11 @@ public class PhotoController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         photoDAO=new PhotoDAO(session);
-        Photo p =photoDAO.find(id);
-
+        Photo photo =photoDAO.find(id_photo);
         session.getTransaction().commit();
         session.close();
-        return p;
+        return photo;
     }
 
     // Delete a photo
@@ -78,20 +78,17 @@ public class PhotoController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         photoDAO = new PhotoDAO(session);
         Photo p = photoDAO.find(id);
         photoDAO.delete(p);
-
         session.getTransaction().commit();
         session.close();
         return ResponseEntity.ok().build();
     }
 
     //update a photo
-    @RequestMapping(value = "/photosup/{id}", method = RequestMethod.PUT)
-    //@GetMapping("/photosup/{id}")
-    public Photo updatephoto(@PathVariable(value = "id") int id) {
+    @PutMapping("/photosup/{id}")
+    public Photo updatephoto(@PathVariable int id,@RequestBody Photo photo) {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")
                 .addResource("Hibernate/User.hbm.xml")
@@ -103,11 +100,9 @@ public class PhotoController {
         session.beginTransaction();
         photoDAO=new PhotoDAO(session);
         Photo p = photoDAO.find(id);
-        Date newDate=new Date();
-        p.setPath("new path");
-        p.setCreation_date(newDate);
+        p.setPath(photo.getPath());
+        p.setCreation_date(photo.getCreation_date());
         photoDAO.update(p);
-
         session.getTransaction().commit();
         session.close();
         return p;
@@ -128,7 +123,6 @@ public class PhotoController {
         session.beginTransaction();
         photoDAO=new PhotoDAO(session);
         List<Photo> l= photoDAO.findAll();
-
         session.getTransaction().commit();
         session.close();
         return l;
