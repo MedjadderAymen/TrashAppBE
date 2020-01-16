@@ -14,7 +14,7 @@ public class AdminDAO extends DAO<Admin> {
 
     @Override
     public boolean create(Admin obj) {
-        session.save(obj);
+         session.save(obj);
 
         return true;
     }
