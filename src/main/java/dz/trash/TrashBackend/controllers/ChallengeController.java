@@ -121,6 +121,26 @@ public class ChallengeController {
                 .configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+         Query q= session.createQuery("from Challenge where state=1");
+
+        List<Challenge> l= q.list();
+
+        session.getTransaction().commit();
+        session.close();
+        return l;
+    }
+    //get all challenge
+    @GetMapping("/challenges/admin")
+    public List<Challenge> getAllchallengesAdmin() {
+        SessionFactory sessionFactory = new Configuration()
+                .addResource("Hibernate/Challenge.hbm.xml")
+                .addResource("Hibernate/User.hbm.xml")
+                .addResource("Hibernate/Comment.hbm.xml")
+                .addResource("Hibernate/Note.hbm.xml")
+                .addResource("Hibernate/Photo.hbm.xml")
+                .configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
         challengeD = new ChallengeDAO(session);
         List<Challenge> l= challengeD.findAll();
@@ -129,6 +149,7 @@ public class ChallengeController {
         session.close();
         return l;
     }
+
 
 //*******************************************************************************************
 
@@ -179,7 +200,7 @@ public class ChallengeController {
 
 
     //delete  participant
-    @DeleteMapping("/challenges/{id_challenge}/delparticipant/{id_user}")
+    @DeleteMapping("/challenges/{id_challenge}/{id_user}")
     public String deleteParticipant(@PathVariable int id_challenge,@PathVariable int id_user) throws ParseException {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")

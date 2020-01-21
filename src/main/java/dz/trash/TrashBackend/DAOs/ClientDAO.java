@@ -34,6 +34,7 @@ public class ClientDAO extends DAO<Client>{
         return  c;
     }
 
+
     @Override
     public List<Client> findAll() {
         List<Client> list= session.createQuery(String.format("from Client")).list();

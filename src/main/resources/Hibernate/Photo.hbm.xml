@@ -6,7 +6,7 @@
         <id name="id_photo" column="id_photo" type="integer">
             <generator class="increment" > </generator>
         </id>
-        <property name="path" column="path" type="string" length="30" />
+        <property name="path" column="path" type="string" length="300" />
         <property name="creation_date" column="creation_date" type="date" />
 
     </class>

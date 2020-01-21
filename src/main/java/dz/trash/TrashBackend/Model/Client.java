@@ -1,6 +1,7 @@
 package dz.trash.TrashBackend.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Set;
 public class Client extends User implements Serializable{
     private String phone_number ;
     private String android_version ;
+
     @JsonBackReference
     private Set<Challenge> challenge;
 

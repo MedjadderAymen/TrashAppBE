@@ -1,6 +1,7 @@
 package dz.trash.TrashBackend.DAOs;
 
 import dz.trash.TrashBackend.Model.Challenge;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -21,6 +22,15 @@ public class ChallengeDAO extends DAO<Challenge> {
     public boolean delete(Challenge obj) {
         session.delete(obj);
         return false;
+    }
+    public boolean up(int id ) {
+        Query q = session.createSQLQuery("update Challenge set state=0 where id_challenge =:id").setParameter("id", id);
+        int r = q.executeUpdate();
+        if (r == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

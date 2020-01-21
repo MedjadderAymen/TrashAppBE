@@ -1,6 +1,10 @@
 package dz.trash.TrashBackend.controllers;
+import dz.trash.TrashBackend.DAOs.ChallengeDAO;
 import dz.trash.TrashBackend.Model.*;
 import dz.trash.TrashBackend.exception.RecordNotFoundException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +27,7 @@ public class MainController {
 
     static {
         ChallengeController challengeController;
-        challenges.addAll(new ChallengeController().getAllchallenge());
+        challenges.addAll(new ChallengeController().getAllchallengesAdmin());
         // photos.add(new Photo(1,"gbhknj", d));
         //photos.add(new Photo(2,"gjhkhbknj", d));
         PhotoController photoController;
@@ -82,18 +86,30 @@ public class MainController {
 
 
     @RequestMapping(path = "/delete/{id}")
-    public String deletechallengeById(Model model, @PathVariable("id") int id)
-            throws RecordNotFoundException
-    {
-        new ChallengeController().deletechallenge(id);
-        model.addAttribute("challenge", new ChallengeController().getAllchallenge());
+    public String updateAdmin(Model model, @PathVariable("id") int id) {
+        SessionFactory sessionFactory = new Configuration()
+                .addResource("Hibernate/Challenge.hbm.xml").addResource("Hibernate/User.hbm.xml")
+                .addResource("Hibernate/Comment.hbm.xml").addResource("Hibernate/Note.hbm.xml")
+                .addResource("Hibernate/Photo.hbm.xml").configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        ChallengeDAO challengeDAO=new ChallengeDAO(session);
+        challengeDAO.up(id);
+        Challenge c= challengeDAO.find(id);
+        challengeDAO.update(c);
+        session.getTransaction().commit();
+      // model.addAttribute("challenge", new ChallengeController().getAllchallengesAdmin());
         return "redirect:/table";
     }
 
-//**************************************************************************************
+
+
+
+
+    //**************************************************************************************
 @RequestMapping(value = {"/table"}, method = RequestMethod.GET)
 public String photoList(Model model) {
-    model.addAttribute("challenges", challenges);
+    model.addAttribute("challenges", new ChallengeController().getAllchallengesAdmin());
 
     return "table";
 }
@@ -106,35 +122,6 @@ public String photoList(Model model) {
 
         return "personList";
     }
-
-
-
-    @RequestMapping(value = { "/addPhoto" }, method = RequestMethod.GET)
-    public String showAddphotoPage(Model model) {
-
-        PhotoForm photoForm = new PhotoForm();
-        model.addAttribute("photoForm", photoForm);
-
-        return "addPhoto";
-    }
-
-    @RequestMapping(value = { "/addPhoto" }, method = RequestMethod.POST)
-    public String savephoto(Model model,@ModelAttribute("photoForm") PhotoForm photoForm) {
-        String path = photoForm.getPath();
-       // Date creation_date = photoForm.getCreation_date();
-            Date  creation=new Date();
-        if (path != null && creation != null) {
-            Photo p = new Photo(5, path, creation);
-            photos.add(p);
-            return "redirect:/personList";
-        } else {
-            model.addAttribute("errorMessage", errorMessage);
-            return "addPhoto";
-        }
-    }
-
-
-
 
 }
 
