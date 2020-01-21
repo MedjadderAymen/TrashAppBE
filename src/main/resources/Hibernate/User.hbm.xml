@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="dz.trash.TrashBackend.Models.User" table="users" discriminator-value="user">
+    <class name="dz.trash.TrashBackend.Model.User" table="users" discriminator-value="user">
         <id column="id_user" name="id_user" type="integer">
         <generator class="increment"/>
         </id>
@@ -13,17 +13,17 @@
         <property column="password"  name="password"  type="string" not-null="true" length="30"/>
         <property column="birthdate"  name="birthdate"  type="date"/>
 
-        <subclass name="dz.trash.TrashBackend.Models.Admin" discriminator-value ="Admin" >
+        <subclass name="dz.trash.TrashBackend.Model.Admin" discriminator-value ="Admin" >
             <property column="email" name="email" type="string" length="30"/>
         </subclass>
 
-        <subclass name="dz.trash.TrashBackend.Models.Client" discriminator-value ="Client" >
+        <subclass name="dz.trash.TrashBackend.Model.Client" discriminator-value ="Client" >
             <property column="phone_number" name="phone_number" type="string" length="30"/>
             <property column="android_version" name="android_version" type="string" length="30"/>
 
             <set name="challenge" inverse="true" cascade="save-update" lazy="false" fetch="join" >
                 <key column="id_user"/>
-                <one-to-many class="dz.trash.TrashBackend.Models.Challenge" />
+                <one-to-many class="dz.trash.TrashBackend.Model.Challenge" />
             </set>
 
         </subclass>

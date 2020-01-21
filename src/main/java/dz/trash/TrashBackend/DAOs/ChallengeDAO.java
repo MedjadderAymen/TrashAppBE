@@ -1,8 +1,6 @@
 package dz.trash.TrashBackend.DAOs;
 
-import dz.trash.TrashBackend.Models.Challenge;
-import dz.trash.TrashBackend.Models.Client;
-import org.hibernate.HibernateException;
+import dz.trash.TrashBackend.Model.Challenge;
 import org.hibernate.Session;
 
 import java.util.List;

@@ -4,20 +4,16 @@ package dz.trash.TrashBackend.controllers;
 import dz.trash.TrashBackend.DAOs.ChallengeDAO;
 import dz.trash.TrashBackend.DAOs.ClientDAO;
 import dz.trash.TrashBackend.DAOs.CommentDAO;
-import dz.trash.TrashBackend.DAOs.PhotoDAO;
-import dz.trash.TrashBackend.Models.Challenge;
-import dz.trash.TrashBackend.Models.Client;
-import dz.trash.TrashBackend.Models.Comment;
-import dz.trash.TrashBackend.Models.Photo;
+import dz.trash.TrashBackend.Model.Challenge;
+import dz.trash.TrashBackend.Model.Client;
+import dz.trash.TrashBackend.Model.Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 @RestController

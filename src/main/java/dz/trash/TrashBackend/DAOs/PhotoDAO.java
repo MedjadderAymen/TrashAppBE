@@ -1,13 +1,17 @@
 package dz.trash.TrashBackend.DAOs;
 
-import dz.trash.TrashBackend.Models.Photo;
+import dz.trash.TrashBackend.Model.Photo;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Transactional
 public class PhotoDAO extends DAO<Photo> {
+    @Autowired
+    private JdbcTemplateAutoConfiguration jdbcTemplateAutoConfiguration;
     public PhotoDAO(Session session) {
         super(session);
     }

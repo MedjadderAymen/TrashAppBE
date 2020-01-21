@@ -1,4 +1,4 @@
-package dz.trash.TrashBackend.Models;
+package dz.trash.TrashBackend.Model;
 
 import java.util.Objects;
 

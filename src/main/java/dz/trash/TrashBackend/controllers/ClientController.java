@@ -3,21 +3,16 @@
 package dz.trash.TrashBackend.controllers;
 
 import dz.trash.TrashBackend.DAOs.ClientDAO;
-        import dz.trash.TrashBackend.Models.Client;
+        import dz.trash.TrashBackend.Model.Client;
         import org.hibernate.Query;
         import org.hibernate.Session;
         import org.hibernate.SessionFactory;
         import org.hibernate.cfg.Configuration;
         import org.springframework.http.ResponseEntity;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
 
-        import javax.validation.Valid;
-        import java.text.DateFormat;
-        import java.text.ParseException;
-        import java.util.Date;
-        import java.util.List;
-        import java.util.Set;
+import java.text.ParseException;
+import java.util.List;
 
 
 @RestController
@@ -134,7 +129,7 @@ public class ClientController {
 
 
     // login
-    @GetMapping("/client/{user_name}/{password}")
+    @GetMapping("/login/{user_name},{password}")
     public Client login( @PathVariable String user_name,@PathVariable String password) throws ParseException {
         SessionFactory sessionFactory = new Configuration()
                 .addResource("Hibernate/Challenge.hbm.xml")

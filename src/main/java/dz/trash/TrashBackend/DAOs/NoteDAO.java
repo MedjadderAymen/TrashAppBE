@@ -1,7 +1,6 @@
 package dz.trash.TrashBackend.DAOs;
 
-import dz.trash.TrashBackend.Models.Note;
-import dz.trash.TrashBackend.Models.Photo;
+import dz.trash.TrashBackend.Model.Note;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 

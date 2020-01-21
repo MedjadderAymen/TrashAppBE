@@ -1,9 +1,7 @@
 package dz.trash.TrashBackend.DAOs;
 
-import dz.trash.TrashBackend.Models.Client;
-import org.hibernate.Criteria;
+import dz.trash.TrashBackend.Model.Client;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 

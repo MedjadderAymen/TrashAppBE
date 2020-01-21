@@ -2,18 +2,14 @@ package dz.trash.TrashBackend.controllers;
 
 import dz.trash.TrashBackend.DAOs.ChallengeDAO;
 import dz.trash.TrashBackend.DAOs.PhotoDAO;
-import dz.trash.TrashBackend.Models.Challenge;
-import dz.trash.TrashBackend.Models.Photo;
+import dz.trash.TrashBackend.Model.Challenge;
+import dz.trash.TrashBackend.Model.Photo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -127,5 +123,8 @@ ChallengeDAO challengeDAO;
         session.close();
         return l;
     }
+
+
+    //***********************************************************************
 
 }

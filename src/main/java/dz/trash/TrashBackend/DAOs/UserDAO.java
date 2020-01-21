@@ -1,11 +1,10 @@
 package dz.trash.TrashBackend.DAOs;
 
-import dz.trash.TrashBackend.Models.User;
+import dz.trash.TrashBackend.Model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import javax.persistence.Query;
 import java.util.List;
 
 public class UserDAO extends DAO<User> {

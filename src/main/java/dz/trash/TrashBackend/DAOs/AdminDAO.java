@@ -1,6 +1,6 @@
 package dz.trash.TrashBackend.DAOs;
 
-import dz.trash.TrashBackend.Models.Admin;
+import dz.trash.TrashBackend.Model.Admin;
 import org.hibernate.Session;
 
 import java.util.List;

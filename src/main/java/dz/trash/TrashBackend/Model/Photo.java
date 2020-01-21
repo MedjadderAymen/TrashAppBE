@@ -1,9 +1,14 @@
-package dz.trash.TrashBackend.Models;
+package dz.trash.TrashBackend.Model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.Objects;
 
 public class Photo {
+
     private int id_photo ;
     private String path ;
     private Date creation_date ;

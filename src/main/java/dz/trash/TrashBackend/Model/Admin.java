@@ -1,6 +1,5 @@
-package dz.trash.TrashBackend.Models;
+package dz.trash.TrashBackend.Model;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Objects;
 

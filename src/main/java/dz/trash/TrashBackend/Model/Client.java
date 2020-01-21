@@ -1,8 +1,7 @@
-package dz.trash.TrashBackend.Models;
+package dz.trash.TrashBackend.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;

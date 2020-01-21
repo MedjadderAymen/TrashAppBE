@@ -1,10 +1,8 @@
 package dz.trash.TrashBackend.DAOs;
 
-import dz.trash.TrashBackend.Models.Comment;
-import dz.trash.TrashBackend.Models.Photo;
+import dz.trash.TrashBackend.Model.Comment;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
