@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title> TrashAPP</title>
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="fixed-sn white-skin">
+<!--Main Navigation-->
+<header>
+
+    <!-- Let's create a full page background intro for our landing page. -->
+    <!--Mask-->
+    <div id="intro" class="view">
+
+        <div class="mask rgba-black-strong">
+
+            <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+                <div class="row d-flex justify-content-center text-center">
+
+                    <div class="col-md-10">
+                        <h1 th:utext="${message}" class="display-4 font-weight-bold white-text pt-5 mb-2">..!..</h1>
+                        <hr class="hr-light">
+
+                        <!-- Description -->
+                        <h4 class="white-text my-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti consequuntur.</h4>
+                        <button type="button" class="btn blue-gradient"><a th:href="@{/login}">Login</a> </button>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!--/.Mask-->
+</header>
+
+<!--
+   In Thymeleaf the equivalent of  JSP's ${pageContext.request.contextPath}/edit.html  would be @{/edit.html}
+   -->
+
+<!-- login
+
+<form th:action="@{/login}"
+      th:object="${userForm}" method="POST">
+    user_name:
+    <input type="text" th:field="*{user_name}" />
+    <br/>
+    password:
+    <input type="password" th:field="*{password}" />
+    <br/>
+    <input type="submit" value="login" />
+</form>
+-->
+
+</body>
+
+</html>

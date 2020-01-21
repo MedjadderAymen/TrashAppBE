@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>challenge List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+   <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>   -->
+</head>
+<body>
+<h1 > challenge List</h1>
+<br/><br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>id_challenge</th>
+            <th>creation_date</th>
+            <th>state</th>
+            <th>starting_date</th>
+            <th>ending_date</th>
+            <th>latitude</th>
+            <th>longitude</th>
+            <th>street</th>
+            <th>city</th>
+            <th>zip_code</th>
+            <th>country</th>
+            <th>first_name</th>
+            <th>last_name</th>
+
+
+
+        </tr>
+        <tr th:each ="challenge : ${challenges}">
+            <td th:utext="${challenge.id_challenge}">...</td>
+            <td th:utext="${challenge.creation_date}">...</td>
+            <td th:utext="${challenge.state}">...</td>
+            <td th:utext="${challenge.starting_date}">...</td>
+            <td th:utext="${challenge.ending_date}">...</td>
+            <td th:utext="${challenge.latitude}">...</td>
+            <td th:utext="${challenge.longitude}">...</td>
+            <td th:utext="${challenge.street}">...</td>
+            <td th:utext="${challenge.city}">...</td>
+            <td th:utext="${challenge.zip_code}">...</td>
+            <td th:utext="${challenge.country}">...</td>
+            <td th:utext="${challenge.owner.first_name}">...</td>
+            <td th:utext="${challenge.owner.last_name}">...</td>
+
+
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <link rel="stylesheet" href="css/styletable.css">
+
+</head>
+<body>
+<!-- Editable table -->
+<div class="card">
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">challenge table</h3>
+    <div class="card-body">
+        <div id="table" class="table-editable">
+      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+              class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+                <thead>
+                <tr>
+                    <th >id_challenge</th>
+                    <th>creation_date</th>
+                    <th>state</th>
+                    <th>starting_date</th>
+                    <th>ending_date</th>
+                    <th>street</th>
+                    <th>city</th>
+                    <th>zip_code</th>
+                    <th>country</th>
+                    <th>first_name</th>
+                    <th>last_name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each ="challenge : ${challenges}">
+                    <td class="pt-3-half" contenteditable="false" th:utext="${challenge.id_challenge}">...</td>
+                    <td class="pt-3-half" contenteditable="false" th:utext="${challenge.creation_date}">...</td>
+                    <td class="pt-3-half" contenteditable="true" th:utext="${challenge.state}">...</td>
+                    <td class="pt-3-half" contenteditable="true" th:utext="${challenge.starting_date}">...</td>
+                    <td class="pt-3-half" contenteditable="true" th:utext="${challenge.ending_date}">...</td>
+                   <td class="pt-3-half" contenteditable="true" th:utext="${challenge.street}">...</td>
+                    <td class="pt-3-half" contenteditable="true" th:utext="${challenge.city}">...</td>
+                    <td class="pt-3-half" contenteditable="false" th:utext="${challenge.zip_code}">...</td>
+                    <td class="pt-3-half" contenteditable="false" th:utext="${challenge.country}">...</td>
+                    <td class="pt-3-half" contenteditable="false" th:utext="${challenge.owner.first_name}">...</td>
+                    <td class="pt-3-half" contenteditable="false"  th:utext="${challenge.owner.last_name}">...</td>
+                    <td>
+                        <a th:href="@{/edit/{id}(id=${challenge.id_challenge})}" class="btn btn-primary">
+                            <i class="fas fa-user-edit ml-2"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/delete/{id}(id=${challenge.id_challenge})}" class="btn btn-primary">
+                            <i class="fas fa-user-times ml-2"> </i>
+                        </a>
+                    </td>
+                </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Editable table -->
+
+</body>
+</html>
